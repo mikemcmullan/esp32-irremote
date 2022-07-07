@@ -1,0 +1,73 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background: #0b1120;
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#heading {
+    text-align: center;
+    color: white;
+    margin: 0 0 20px 0;
+}
+
+.remote {
+    margin: 0 auto;
+    width: 100%;
+    background: #0d1429;
+    // width: 90%;
+    // height: 90vh;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 1px 1px 20px rgba(0, 0, 0, .5);
+
+    overflow: hidden;
+}
+
+.remote-btn-row {
+    display: flex;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.remote-btn {
+    flex-grow: 1;
+
+    button {
+        opacity: .8;
+        color: white;
+        background: lighten(#333, 10%);
+        border: 0;
+        width: 100%;
+        height: 5em;
+        border-right: 1px lighten(#333, 20%) solid;
+        cursor: pointer;
+        min-width: 75px;
+
+        &:hover,
+        &:focus {
+            background: lighten(#333, 15%);
+        }
+    }
+
+    &:last-child button {
+        border-right: 0;
+    }
+}
