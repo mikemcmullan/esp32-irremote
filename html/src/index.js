@@ -13,7 +13,7 @@ PetiteVue.createApp({
 
         this.pause = true;
 
-        fetch(`http://192.168.1.130/api?btn=${btn}&repeat=${repeat}`)
+        fetch(`${window.location.protocol}//${window.location.host}/api?btn=${btn}&repeat=${repeat}`)
             .then((resp) => {
                 setTimeout(() => this.pause = false, 1000);
             })

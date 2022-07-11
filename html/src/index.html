@@ -70,6 +70,9 @@
                     <button :disabled="pause" @click="doRequest('MENU')">Menu</button>
                 </div>
                 <div class="remote-btn">
+                    <button :disabled="pause" @click="doRequest('EXIT')">Exit</button>
+                </div>
+                <div class="remote-btn">
                     <button :disabled="pause" @click="doRequest('MUTE')">Mute</button>
                 </div>
             </div>
