@@ -5,6 +5,7 @@
 .vscode/ipch
 
 src/secrets.h
+data/*
 html/dist
 html/.cache
 html/node_modules
