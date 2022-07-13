@@ -13,12 +13,12 @@
             
             <div class="remote-btn-row">
                 <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('POWER')">
+                    <button :disabled="pause" @click="doRequest('samsung', 'POWER')">
                         Power
                     </button>
                 </div>
                 <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('SOURCE')">
+                    <button :disabled="pause" @click="doRequest('samsung', 'SOURCE')">
                         Source
                     </button>
                 </div>
@@ -26,16 +26,16 @@
 
             <div class="remote-btn-row">
                 <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('UP')">Up</button>
+                    <button :disabled="pause" @click="doRequest('samsung', 'UP')">Up</button>
                 </div>
                 <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('DOWN')">Down</button>
+                    <button :disabled="pause" @click="doRequest('samsung', 'DOWN')">Down</button>
                 </div>
                 <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('LEFT')">Left</button>
+                    <button :disabled="pause" @click="doRequest('samsung', 'LEFT')">Left</button>
                 </div>
                 <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('RIGHT')">
+                    <button :disabled="pause" @click="doRequest('samsung', 'RIGHT')">
                         Right
                     </button>
                 </div>
@@ -43,37 +43,55 @@
 
             <div class="remote-btn-row">
                 <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('VOL_UP', 5)">Volume Up</button>
+                    <button :disabled="pause" @click="doRequest('samsung', 'VOL_UP', 5)">Volume Up</button>
                 </div>
                 <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('SELECT')">Select</button>
+                    <button :disabled="pause" @click="doRequest('samsung', 'SELECT')">Select</button>
                 </div>
                 <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('VOL_UP')">Channel Up</button>
-                </div>
-            </div>
-
-            <div class="remote-btn-row">
-                <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('VOL_DOWN', 5)">Volume Down</button>
-                </div>
-                <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('MUTE')">Mute</button>
-                </div>
-                <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('VOL_DOWN')">Channel Down</button>
+                    <button :disabled="pause" @click="doRequest('samsung', 'VOL_UP')">Channel Up</button>
                 </div>
             </div>
 
             <div class="remote-btn-row">
                 <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('MENU')">Menu</button>
+                    <button :disabled="pause" @click="doRequest('samsung', 'VOL_DOWN', 5)">Volume Down</button>
                 </div>
                 <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('EXIT')">Exit</button>
+                    <button :disabled="pause" @click="doRequest('samsung', 'MUTE')">Mute</button>
                 </div>
                 <div class="remote-btn">
-                    <button :disabled="pause" @click="doRequest('MUTE')">Mute</button>
+                    <button :disabled="pause" @click="doRequest('samsung', 'VOL_DOWN')">Channel Down</button>
+                </div>
+            </div>
+
+            <div class="remote-btn-row">
+                <div class="remote-btn">
+                    <button :disabled="pause" @click="doRequest('samsung', 'MENU')">Menu</button>
+                </div>
+                <div class="remote-btn">
+                    <button :disabled="pause" @click="doRequest('samsung', 'EXIT')">Exit</button>
+                </div>
+                <div class="remote-btn">
+                    <button :disabled="pause" @click="doRequest('samsung', 'MUTE')">Mute</button>
+                </div>
+            </div>
+
+            <div class="remote-btn-row">
+                <div class="remote-btn">
+                    <button :disabled="pause" @click="doRequest('hdmi-switcher', '1')">HDMI 1</button>
+                </div>
+                <div class="remote-btn">
+                    <button :disabled="pause" @click="doRequest('hdmi-switcher', '2')">HDMI 2</button>
+                </div>
+                <div class="remote-btn">
+                    <button :disabled="pause" @click="doRequest('hdmi-switcher', '3')">HDMI 3</button>
+                </div>
+                <div class="remote-btn">
+                    <button :disabled="pause" @click="doRequest('hdmi-switcher', '4')">HDMI 4</button>
+                </div>
+                <div class="remote-btn">
+                    <button :disabled="pause" @click="doRequest('hdmi-switcher', '5')">HDMI 5</button>
                 </div>
             </div>
         </div>

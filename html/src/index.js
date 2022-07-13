@@ -6,14 +6,20 @@ import './style.scss';
 PetiteVue.createApp({
     pause: false,
 
-    doRequest(btn, repeat) {
+    doRequest(remote, btn, repeat) {
         if (! repeat) {
             repeat = 1;
         }
 
         this.pause = true;
 
-        fetch(`${window.location.protocol}//${window.location.host}/api?btn=${btn}&repeat=${repeat}`)
+        let host = `${window.location.protocol}//${window.location.host}`;
+
+        if (process.env.NODE_ENV === 'development') {
+            host = `http://${process.env.IP}`;
+        }
+
+        fetch(`${host}/api/${remote}?btn=${btn}&repeat=${repeat}`)
             .then((resp) => {
                 setTimeout(() => this.pause = false, 1000);
             })
