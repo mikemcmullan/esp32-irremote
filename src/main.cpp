@@ -11,7 +11,7 @@
 #include <remotes.h>
 #include <secrets.h>
 
-#define IR_RECEIVE_PIN 23
+#define IR_RECEIVE_PIN 22
 #define IR_SEND_PIN 21
 
 #define DELAY_AFTER_SEND 2000
