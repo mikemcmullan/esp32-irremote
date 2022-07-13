@@ -6,7 +6,9 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <cppQueue.h>
-#include <remotes/Samsung.h>
+// #include <remotes/Samsung.h>
+// #include <remotes/HDMI_Switch.h>
+#include <remotes.h>
 #include <secrets.h>
 
 #define IR_RECEIVE_PIN 23
@@ -16,7 +18,7 @@
 #define DELAY_AFTER_LOOP 5000
 
 AsyncWebServer server(80);
-cppQueue queue(sizeof(SamsungRemoteButton), 10, LIFO);
+cppQueue queue(sizeof(RemoteButton), 10, LIFO);
 
 bool requestProcessing = false;
 int ledStatus = LOW;
@@ -90,11 +92,11 @@ void setupWifi()
     }
 }
 
-int findSamsungButtonIndex(String btn)
+int findButtonIndex(RemoteButton const remoteBtns[], int size, String btn)
 {
-    for (int i = 0; i <= SAMSUNG_NUM_BUTTONS - 1; i++)
+    for (int i = 0; i < size; i++)
     {
-        if (SamsungRemote[i].btn == btn)
+        if (remoteBtns[i].btn == btn)
         {
             return i;
         }
@@ -122,17 +124,36 @@ void setup()
 
     server.serveStatic("/", SPIFFS, "/").setDefaultFile("index.html");
 
-    server.on("/api", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.on("/api/hdmi-switcher", HTTP_GET, [](AsyncWebServerRequest *request)
               { 
-        Serial.println(request->url());
+                if (request->hasParam("btn")) 
+                {
+                    AsyncWebParameter *btn = request->getParam("btn");
+
+                    int i = findButtonIndex(HDMISwitcher, 5, btn->value());
+
+                    if (i >= 0)
+                    {
+                        queue.push(&HDMISwitcher[i]);
+                        request->send(200, "application/json", "{\"success\": true}");
+                        return;
+                    }
+
+                    request->send(400, "application/json", "{\"error\": \"Unknown button.\"}");
+                    return;
+                }
+
+                    request->send(400, "application/json", "{\"error\": \"Missing button.\"}"); });
+
+    server.on("/api/samsung", HTTP_GET, [](AsyncWebServerRequest *request)
+              {
         if (request->hasParam("btn"))
         {
             AsyncWebParameter *repeat = request->getParam("repeat");
-            AsyncWebParameter* btn = request->getParam("btn");
-            int i = findSamsungButtonIndex(btn->value());
-            int repeatTimes = 1;
+            AsyncWebParameter *btn = request->getParam("btn");
 
-            // Serial.println(repeat->value());
+            int i = findButtonIndex(SamsungRemote, 43, btn->value());
+            int repeatTimes = 1;
 
             if (i >= 0)
             {
@@ -155,10 +176,15 @@ void setup()
                     queue.push(&SamsungRemote[i]);
                 }
                 
+                request->send(200, "application/json", "{\"success\": true}");
+                return;
             }
+
+            request->send(400, "application/json", "{\"error\": \"Unknown button.\"}");
+            return;
         }
 
-        request->send(200, "text/plain", "Hello World"); });
+       request->send(400, "application/json", "{\"error\": \"Missing button.\"}"); });
 
     server.onNotFound([](AsyncWebServerRequest *request)
                       { 
@@ -179,11 +205,19 @@ void loop()
 
     while (!queue.isEmpty())
     {
-        SamsungRemoteButton btn;
+        RemoteButton btn;
         queue.pop(&btn);
         Serial.println(btn.btn);
 
-        IrSender.sendSamsung(SAMSUNG_ADDRESS, btn.value, 0);
+        if (btn.type == NEC_TYPE)
+        {
+            IrSender.sendNEC(HDMI_SWITCHER_ADDRESS, btn.value, 0);
+        }
+        else if (btn.type == SAMSUNG_TYPE)
+        {
+            IrSender.sendSamsung(SAMSUNG_ADDRESS, btn.value, 0);
+        }
+
         delay(200);
     }
 
